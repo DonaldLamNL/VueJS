@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>13f_Vue監測原理總結</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <div id="demo">
+            <!-- 
+                Vue監測數據原理：
+                    1. Vue會監測data中所有層次的數據
+
+                    2. Vue監測對象中的數據：
+                        通過setter實現監視，且要再new Vue時就傳入要監測的數據
+                            a. 對象中 後追加的屬性，Vue默認不做響應式處理 (後追加的屬性並沒有添加setter)
+                            b. 如需要給後添加的屬性做響應式，則需要使用一下API：
+                                - Vue.set(target, key, value)
+                                - vm.$set(target, key, value)
+                    
+                    3. Vue監測數組中的數據：
+                        通過包裹數組更新元素的方法實現，本質包裹裡就做了兩件事：
+                            a. 調用原生對應的方法對數組進行更新
+                            b. 重新解析模板，進而更新頁面
+
+                    4. 在Vue修改數組中的某個元素一定要用如下方法：
+                        a. 使用以下API：push(), pop(), shift(), unshift(), splice(), sort(), reverse()
+                        b. Vue.set() 或 vm.$set
+
+                    *備註：Vue.set() 和 vm.$set 不可以給 vm 或 vm的跟數據對象 添加屬性！！！
+            -->
+            <h1>Student Info</h1>
+            <button @click="student.age++">Age + 1</button><br>
+            <button @click="addGender">Add Gender</button><br>
+            <button @click="student.gender = student.gender === 'M' ? 'F' : 'M'">Change Gender</button><br>
+            <button @click.once="addFriend">Add a friend at the front of the list</button><br>
+            <button @click="editFriend">Edit the first friend's info</button><br>
+            <button @click.once="addHobby">Add a hobby</button><br>
+            <button @click="editHobby">Edit the first hobby</button><br>
+
+            <h3>Name: {{student.name}}</h3>
+            <h3>Age: {{student.age}}</h3>
+            <h3 v-if="student.gender">Gender: {{student.gender}}</h3>
+            <h3>Hobbies:</h3>
+            <ul>
+                <li v-for="(h,index) in student.hobbies" :key="index">
+                    {{h}}
+                </li>
+            </ul>
+            <h3>Friends:</h3>
+            <ul>
+                <li v-for="(f,index) in student.friends" :key="index">
+                    {{f.name}} -- {{f.age}}
+                </li>
+            </ul>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                student:{
+                    name:'Donald',
+                    age:19,
+                    hobbies:['hiking', 'running', 'singing'],
+                    friends:[
+                        {name:'John', age:20},
+                        {name:'Mark', age:19},
+                    ]
+                }
+            },
+            methods:{
+                addGender(){
+                    // Vue.set(this.student, 'gender', 'M')
+                    this.$set(this.student, 'gender', 'M')
+                },
+                addFriend(){
+                    this.student.friends.unshift({name:'Jack', age:28})
+                },
+                editFriend(){
+                    // this.$set(this.student.friends, 0, {name:'May', age:15})
+                    this.student.friends[0].name = 'Tom'
+                    this.student.friends[0].age = 15
+                },
+                addHobby(){
+                    this.student.hobbies.unshift('dancing')
+                },
+                editHobby(){
+                    // this.$set(this.student.hobbies, 0, 'learning')
+                    this.student.hobbies.splice(0, 1, 'learning')
+                }
+            }
+        })
+    </script>
+</html>

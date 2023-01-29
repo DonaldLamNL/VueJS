@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>13b_對象數據改變的原理</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <div id="demo">
+            <h2>School Name: {{name}}</h2>
+            <h2>School Address: {{address}}</h2>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                name:'CUHK',
+                address:'Tai Po',
+                students:{
+                    name:'Donald',
+                    age:{
+                        realAge:40,
+                        fakeAge:18
+                    },
+                    friends:[
+                        {name:'John', age:35}
+                    ]
+                }
+            },
+        })
+    </script>
+</html>

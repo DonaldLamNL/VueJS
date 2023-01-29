@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>13d_Vue.set的使用</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <div id="demo">
+            <h1>School Info</h1>
+            <h2>School Name: {{school.name}}</h2>
+            <h2>School Address: {{school.address}}</h2>
+            <h2>School Ranking: {{school.ranking}}</h2>
+            <hr>
+            <h1>Student Info</h1>
+            <button @click="addGender">Add Gender Element</button>
+            <h2>Student Name: {{students.name}}</h2>
+            <h2 v-if="students.gender">Student Gender: {{students.gender}}</h2>
+            <h2>Student Age: Real {{students.age.realAge}}, Fake {{students.age.fakeAge}}</h2>
+            <hr>
+            <ul>
+                <h2>Friends</h2>
+                <li v-for="(f,index) in students.friends" :key="index">
+                    {{f.name}} -- {{f.age}}
+                </li>
+            </ul>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                school:{
+                    name:'CUHK',
+                    address:'Tai Po',
+                },
+                students:{
+                    name:'Donald',
+                    age:{
+                        realAge:40,
+                        fakeAge:18
+                    },
+                    friends:[
+                        {name:'John', age:35},
+                        {name:'May', age:30}
+                    ]
+                }
+            },
+            methods: {
+                addGender(){
+                    // Vue.set(this.students, 'gender', 'M')
+                    this.$set(this.students, 'gender', 'M')
+                }
+            },
+        })
+    </script>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>01b_HelloWorld</title>
+        <!-- 引入Vue -->
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <!-- 
+            Vue 總結：
+                1. 想讓Vue工作，就必須創建一個Vue實例，且要傳入一個配置對象
+                2. root容器中的代碼依然符合html規範，只不過混入了一些特殊的Vue語法
+                3. root容器中的代碼被稱為 "Vue模板"
+                4. Vue實例和容器是*一對一*的
+                5. 真實開發中有一個Vue實例，並且會配合著組件一起使用
+                6. {{xxx}}中的xxx要寫JS表達式，且xxx可以自動讀取data中的所有屬性
+                7. 一旦data中的數據發生改變，那麼頁面中用到該數據的地方也會自動更新
+
+                注意區分：JS表達式 和 JS代碼/語句
+                    JS表達式：一個表達式會生成一個值，可以放在任何一個地方
+                        1. a (變量)
+                        2. a+b
+                        3. demo(1)
+                        4. x === y ? 'a' : 'b'
+                    JS語句
+                        1. if(){}
+                        2. for(){}
+        -->
+
+        <!-- 準備一個容器 -->
+        <div id="demo">
+            <h1>Hello {{name}}, {{address}}</h1>
+        </div>
+        
+    </body>
+    <script>
+        Vue.config.productionTip = false;
+
+        // 創建Vue實例
+        new Vue({
+            el:'#demo',      // element 用於指定當前Vue實例為哪個容器服務，值通常為css選擇棄字符串
+            // el:document.getElementById('demo')
+            data:{ // data中用於存儲數據，數據共el所指定的容器去使用，值暫時先寫成一個對象
+                name:'Donald',
+                address:'Lam Tin'
+            }
+        });
+
+    </script>
+</html>

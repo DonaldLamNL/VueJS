@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>07a_事件處理</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <!--  
+            事件的基本使用：
+                1. 使用 v-on:xxx 或 @xxx 綁定事件，其中xxx是事件名
+                2. 事件的回調需要配置在 methods 對象中，最終會在 vm 上
+                3. methods中配置的函數，不要用箭頭函數，否則this就不是vm了
+                4. methods中配置的函數，都是被Vue所管理的函數，this的指向是 vm 或 組件實例對象
+                5. @click="demo" 和 @click="demo($event)" 效果一致，但後者可以傳参
+        -->
+        <div id="demo">
+            <h2>Welcome to {{name}}</h2>
+            <button @click="showInfo1">Click Me 1 (傳參)</button>
+            <button @click="showInfo2(66, $event)">Click Me 2 (不傳参)</button>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                name:'Donald',
+            },
+            methods:{
+                showInfo1(event){
+                    // console.log(event.target.innerText)
+                    // console.log(this)    // 此處的this是vm
+                    alert('Hello 1');
+                },
+                showInfo2(number, a){
+                    // console.log(event.target.innerText)
+                    // console.log(this)    // 此處的this是vm
+                    console.log(number, a);
+                    alert('Hello 2');
+                }
+            }
+        })
+    </script>
+</html>

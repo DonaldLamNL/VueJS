@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>17a_引出生命週期</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <!-- 
+            Vue生命週期：
+                - Vue在關鍵時刻幫我們調用的一些特殊名稱的函數
+                - 生命週期函數的名字不可更改，但函數的具體內容是程序員根據要求編寫的
+                - 生命週期函數中的this指向是 vm 或 組件實例對象
+        -->
+        <div id="demo">
+            <!-- {opacity: opacity} -->
+            <h2 :style="{opacity}">Vue Learning</h2>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        new Vue({
+            el:'#demo',
+            data:{
+                opacity:1
+            },
+            methods:{
+
+            },
+            // 調用時機：Vue完成模板的解析，並把初始的真實DOM元素放入頁面後(完成掛載/掛載完畢)調用
+            mounted(){
+                setInterval(() => {
+                    this.opacity = this.opacity < 0 ? 1 : this.opacity
+                    this.opacity -= 0.01
+                }, 16);
+            },
+        })
+        // 通過外部定時器實現(不推薦)
+        // setInterval(() => {
+        //     vm.opacity = vm.opacity < 0 ? 1 : vm.opacity
+        //     vm.opacity -= 0.01
+        // }, 16);
+    </script>
+</html>

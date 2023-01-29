@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>16c_v-cloak</title>
+        <style>
+            [v-cloak]{
+                display: none;
+            }
+            </style>
+    </head>
+    <body>
+        <!-- 
+            v-cloak指令：
+                - 本質是一個特殊屬性，Vue實例創建完畢並接管容器後，會刪除v-cloak屬性
+                - 使用css配合v-cloak可以解決網速慢時頁面展示出的{{xxx}}問題
+        -->
+        <div id="demo">
+            <h2 v-cloak>{{name}}</h2>
+        </div>
+        <script src="../vue_basic/vue.js"></script>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                name:'Donald'
+            },
+            methods:{
+                
+            }
+        })
+    </script>
+</html>

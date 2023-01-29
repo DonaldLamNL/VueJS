@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>02c_組件嵌套</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <div id="root"></div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+        
+        // 定義 student 組件
+        const student = {
+            template:`
+                <div>
+                    <h2>Student Name: {{studentName}}</h2>
+                    <h2>Student Age: {{age}}</h2>
+                </div>
+            `,
+            data(){
+                return{
+                    studentName:'Donald',
+                    age:19
+                }
+            }
+        }
+
+        // 定義 school 組件
+        const school = {
+            template:`
+                <div>
+                    <h2>School Name: {{schoolName}}</h2>
+                    <h2>School Address: {{address}}</h2>
+                    <student></student>
+                </div>
+            `,
+            data(){
+                return{
+                    schoolName:'The Chinese University of Hong Kong',
+                    address:'Hong Kong'
+                }
+            },
+            components:{
+                student
+            }
+        
+        }
+        
+        // 定義 hello 組件
+        const hello = {
+            template:`
+                <h1>{{msg}}</h1>
+            `,
+            data(){
+                return{
+                    msg:'Welcome to CUHK'
+                }
+            }
+        }
+
+        // 定義 app 組件
+        const app = {
+            template:`
+                <div>
+                    <hello></hello>
+                    <school></school>
+                </div>
+            `,
+            components:{
+                school,
+                hello
+            }
+        }
+
+
+        new Vue({
+            el:'#root',
+            template:`
+                <app></app>
+            `,
+            // 註冊組件(局部)
+            components:{app}
+        })
+
+    </script>
+</html>

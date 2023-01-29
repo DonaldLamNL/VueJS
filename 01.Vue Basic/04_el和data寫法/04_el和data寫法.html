@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>04_el和data寫法</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <!-- 
+            el的兩種寫法：
+                1. new Vue 時配置el的屬性
+                2. 先創建Vue實例，隨後再通過 vm.$mount('#root')指定el的值
+            data的兩種寫法：
+                1. 對象式
+                2. 函數式 <- 推薦使用，因為後續會報錯
+                    備註：由Vue管理的函數，一定不要寫箭頭函數，一旦寫了箭頭函數，this就不再是Vue實例了
+         -->
+        <div id="demo">
+            <h1>Hello, {{name}}</h1>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        // el的兩種寫法
+        const v = new Vue({
+            // el:'#demo',     // 第一種寫法
+
+            // data第一種寫法：對象式
+            // data:{
+            //     name:'Donald'
+            // }
+
+            // data的第二種寫法：函數式
+            data:function(){
+                console.log(this);  // 此處的this是Vue實例對象
+                return{
+                    name:'Donald'
+                }
+            }
+            // data:() => {
+            //     console.log(this);  // 此處的this是Window實例對象
+            //     return{
+            //         name:'Donald'
+            //     }
+            // }
+        })
+
+        v.$mount('#demo');      // 第二種寫法
+
+      </script>
+</html>

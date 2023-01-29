@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <div id="demo">
+            <!-- 遍歷數組 -->
+            <h2>Name List</h2>
+            <input type="text" placeholder="Enter the name" v-model="keyWord">
+            <button @click="sortType = 2">Age Accending Order</button>
+            <button @click="sortType = 1">Age Decending Order</button>
+            <button @click="sortType = 0">Original Order</button>
+            <ul>
+                <li v-for="(p,index) in filPersons" :key="p.id">
+                    {{p.name}}-{{p.age}}
+                </li>
+            </ul>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        // 用computed實現
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                keyWord:'',
+                sortType:0,
+                persons:[
+                    {id:'001', name:'chou sing chi', age:20},
+                    {id:'002', name:'lau tak wah', age:30},
+                    {id:'003', name:'fung tak lun', age:25},
+                    {id:'004', name:'chou kit lun', age:40},
+                ],
+            },
+            computed:{
+                filPersons(){
+                    const arr = this.persons.filter((p) => {
+                        return p.name.indexOf(this.keyWord) !== -1
+                    })
+                    // 判斷是否需要排序
+                    if(this.sortType){
+                        arr.sort((p1,p2) => {
+                            return this.sortType === 1 ? p2.age-p1.age : p1.age-p2.age
+                        })
+                    }
+                    return arr
+                }
+            },
+        })
+
+        // let arr = [1,3,2,6,4,5]
+        // arr.sort((a,b) => {
+        //     return b-a
+        // })
+        // console.log(arr)
+    </script>
+</html>

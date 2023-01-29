@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <!-- 
+            v-for指令：
+                - 用於展示列表數據
+                - 語法：v-for="(item, index)" :key="yyy"
+                - 可遍歷：數組、對象、字符串、指定次數
+        -->
+        <div id="demo">
+            <!-- 遍歷數組 -->
+            <h2>Name List</h2>
+            <ul>
+                <li v-for="(p,index) in persons" :key="index">
+                    {{p.name}}-{{p.age}} -- {{index}}
+                </li>
+            </ul>
+
+            <!-- 遍歷對象 -->
+            <h2>Car Info</h2>
+            <ul>
+                <li v-for="(value,k) in car" :key="k">
+                    {{k}} -- {{value}}
+                </li>
+            </ul>
+            
+            <!-- 遍歷字符串（少用） -->
+            <h2>String</h2>
+            <ul>
+                <li v-for="(char,index) in str" :key="index">
+                    {{char}}
+                </li>
+            </ul>
+
+            <!-- 遍歷指定次數（少用） -->
+            <h2>Times</h2>
+            <ul>
+                <li v-for="(number,index) in 10" :key="index">
+                    {{number}} - {{index}}
+                </li>
+            </ul>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                persons:[
+                    {id:'001', name:'Donald', age:19},
+                    {id:'002', name:'John', age:20},
+                    {id:'003', name:'Jack', age:21},
+                ],
+                car:{
+                    name:'Porsche',
+                    price:'10M',
+                    color:'Black'
+                },
+                str:'Hello'
+            },
+        })
+    </script>
+</html>

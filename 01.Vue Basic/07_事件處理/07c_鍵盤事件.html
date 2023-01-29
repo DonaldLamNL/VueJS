@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>07c_鍵盤事件</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <!--  
+            鍵盤事件：
+                1. Vue中常用的按鍵別名：
+                    enter
+                    delete
+                    esc
+                    space
+                    tab (特殊，必須配合keydown去使用)
+                    up
+                    down
+                    left
+                    right
+
+                2. Vue未提供別名的按鍵，可以使用按鍵原始的key值去綁定，但注意要轉為kebab-case(短橫線命名)
+
+                3. 系統修飾鍵（用法特殊）：ctrl、alt、shift、meta
+                    a. 配合keyup使用：按下修飾鍵的同時，再按下其他鍵，隨後釋放其他鍵，事件才會觸發
+                    b. 配合keydown使用：正常觸發事件
+                
+                4. 也可以使用keyCode去指定具體的按鍵（不推薦）
+                
+                5. Vue.config.keyCodes.自定義鍵名 = 鍵碼，可以去定製按鍵別名
+        -->
+        <div id="demo">
+            <h2>Welcome To {{name}}</h2>
+            <!-- <input type="text" placeholder="按下回車提示輸入" @keydown.huiche="showInfo"> -->
+            <input type="text" placeholder="按下回車提示輸入" @keyup.ctrl.y="showInfo">
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+        Vue.config.keyCodes.huiche = 13
+
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                name:'Donald'
+            },
+            methods:{
+                showInfo(e){
+                    // console.log(e.keyCode);
+                    // if(e.keyCode !== 13) return
+                    console.log(e.target.value);
+                    // console.log(e.key, e.keyCode);
+                }
+            }
+        })
+    </script>
+</html>

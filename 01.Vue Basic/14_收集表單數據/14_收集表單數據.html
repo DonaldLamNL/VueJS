@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>14_收集表單數據</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <!-- 
+            收集表單數據：
+                1. <input type="text"/>，則v-model收集的是value值，而用戶輸入的就是value值
+                2. <input type="radio"/>，則v-model收集的是value值，而要給標籤配置value值
+                3. <input type="checkbox"/>
+                    - 如果沒有配置input的value屬性，則v-model收集的是checked，boolean value, true/false
+                    - 如果有配置input的value屬性：
+                        a. v-model的初始值是非數組，那麼收集的就是checked，boolean value, true/false
+                        b. v-model的初始值是數組，那麼收集的就是value組成的數組
+
+                備註：v-model的三個修飾符
+                    1. lazy：失去焦點再收集數據
+                    2. number：輸入字符串轉為有效數字
+                    3. trim：輸入收尾空格過濾
+        -->
+        <div id="demo">
+            <form @submit.prevent="submission">
+                Account: <input type="text" v-model.trim="userInfo.account"> <br><br>
+                Password: <input type="password" v-model="userInfo.password"> <br><br>
+                Age: <input type="number" v-model.number="userInfo.age"> <br><br>
+
+                Gender: 
+                M<input type="radio" name="gender" value="M" v-model="userInfo.gender">
+                F<input type="radio" name="gender" value="F" v-model="userInfo.gender"> <br><br>
+
+                Hobbies: 
+                hiking <input type="checkbox" v-model="userInfo.hobbies" value="hiking">
+                learning <input type="checkbox" v-model="userInfo.hobbies" value="learning">
+                eating <input type="checkbox" v-model="userInfo.hobbies" value="eating"> <br><br>
+
+                Address
+                <select v-model="userInfo.district">
+                    <option value="">District</option>
+                    <option value="kt">Kwun Tong</option>
+                    <option value="wts">Wong Tai Sin</option>
+                    <option value="ytm">Yau Tsim Mong</option>
+                </select> <br><br>
+
+                Other Information:
+                <textarea v-model.lazy="userInfo.other"></textarea> <br><br>
+
+                <input type="checkbox" v-model="userInfo.agree"> Please read the <a href="http://www.google.com">User Agreement</a> <br><br>
+
+                <button>Submit</button> 
+            </form>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        const v1 = new Vue({
+            el:'#demo',
+            data:{
+                userInfo:{
+                    account:'',
+                    password:'',
+                    age:'',
+                    gender:'M',
+                    hobbies:[],
+                    district:'kt',
+                    other:'',
+                    agree:false
+                }
+            },
+            methods:{
+                submission(){
+                    console.log(v1.userInfo)
+                }
+            }
+        })
+    </script>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>07b_事件修飾符</title>
+        <script src="../vue_basic/vue.js"></script>
+        <style>
+            *{
+                margin-top: 20px;
+            }
+            .demo1{
+                height: 50px;
+                background-color: #bfa;
+            }
+            .box1{
+                padding: 5px;
+                background-color: skyblue;
+            }
+            .box2{
+                padding: 5px;
+                background-color: orange;
+            }
+            .list{
+                height: 200px;
+                width: 200px;
+                background-color: #bfa;
+                overflow: auto;
+            }
+            li{
+                height: 100px;
+            }
+        </style>
+    </head>
+    <body>
+        <!--  
+            Vue中的事件修飾符：
+                1. prevent：阻止默認事件
+                2. stop：阻止事件冒泡
+                3. once：事件只出發一次
+                4. capture：使用事件的捕獲模式
+                5. self：只有event.target是當前操作的元素時才觸法事件
+                6. passive：事件的默認行為立即執行，無需等到事件回調執行完畢
+
+            修飾符可以連續寫 例如 @click.prevent.stop 先阻止默認事件，再阻止冒泡
+        -->
+        <div id="demo">
+            <h2>Welcome To {{name}}</h2>
+            <!-- 阻止默認事件 -->
+            <a href="http://www.google.com" @click.prevent="showInfo">Click Me To Google</a>
+            
+            <!-- 阻止事件冒泡 -->
+            <div class="demo1" @click="showInfo">
+                <button @click.stop="showInfo">Click Me</button>
+                <!-- <a href="http://www.google.com" @click.stop.prevent="showInfo">Click Me</a> -->
+            </div>
+            
+            <!-- 事件只觸法一次 -->
+            <button @click.once="showInfo">Click Me</button>
+            
+            <!-- 使用事件的捕獲模式 -->
+            <div class="box1" @click.capture="showMsg(1)">
+                div1
+                <div class="box2" @click="showMsg(2)">div2</div>
+            </div>
+            
+            <!-- 只有event.target是當前操作的元素時才觸法事件 -->
+            <div class="demo1" @click.self="showInfo">
+                <button @click="showInfo">Click Me</button>
+            </div>
+
+            <!-- 事件的默認行為立即執行，無需等到事件回調執行完畢 -->
+            <ul @wheel.passive="scrollEvent" class="list">
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+            </ul>
+
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                name:'Donald',
+            },
+            methods:{
+                showInfo(e){
+                    // e.preventDefault();
+                    // e.stopPropagation();
+                    alert('Hello');
+                    // console.log(e.target)
+                },
+                showMsg(msg){
+                    console.log(msg);
+                },
+                scrollEvent(){
+                    for(let i = 0; i < 1000; i++){
+                        console.log('#');
+                    }
+                    console.log('Tired');
+                }
+            }
+        })
+    </script>
+</html>

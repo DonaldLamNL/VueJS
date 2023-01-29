@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>15_過濾器</title>
+        <script src="../vue_basic/vue.js"></script>
+        <script src="../vue_basic/dayjs.js"></script>
+    </head>
+    <body>
+        <!-- 
+            過濾器：
+                定義：對要顯示的數據進行特定的格式化後再顯示
+                語法：
+                    1. 註冊過濾器：Vue.filter(name, callback) 或 new Vue(filters:{})
+                    2. 使用過濾器：{{xxx | filterName}} 或 v-bind:屬性="xxx | filterName"
+                備註：
+                    1. 過濾器可以接受額外參數，多個過濾器也可以串連
+                    2. 並沒有改變原本的數據，會產生新的對應數據
+        -->
+        <div id="demo">
+            <h2>格式化後的時間：</h2>
+            <h3>現在時間戳：{{time}}</h3>
+            <!-- 計算屬性實現 -->
+            <h3>現在時間：{{fmtTime}}</h3>
+            <!-- methods實現 -->
+            <h3>現在時間：{{getFmtTime()}}</h3>
+            <!-- 過濾器實現 -->
+            <h3>現在時間：{{time | timeFormater | mySlice}}</h3>
+
+            <h3 :x="msg | mySlice">Donald</h3>
+        </div>
+        <div id="demo2">
+            <h2>Message: {{msg | mySlice}}</h2>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        // 全局過濾器
+        Vue.filter('mySlice', function(value){
+            return value.slice(6,10)
+        })
+
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                time:Date.now(),
+                msg:'Good Morning'
+            },
+            computed:{
+                fmtTime(){
+                    return dayjs(this.time).format('DD/MM/YYYY HH:mm:ss')
+                }
+            },
+            methods:{
+                getFmtTime(){
+                    return dayjs(this.time).format('DD/MM/YYYY HH:mm:ss')
+                }
+            },
+            // 局部過濾器
+            filters:{
+                timeFormater(value){
+                    return dayjs(value).format('DD/MM/YYYY HH:mm:ss')
+                },
+                mySlice(value){
+                    return value.slice(6,10)
+                }
+            }
+        })
+
+        const v2 = new Vue({
+            el:'#demo2',
+            data:{
+                msg:'Hello World'
+            }
+        })
+    </script>
+</html>

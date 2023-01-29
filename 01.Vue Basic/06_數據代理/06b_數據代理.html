@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>06b_數據代理</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <!-- 
+            數據代理：
+                1. Vue中的數據代理：
+                    通過vm對象來代理data對象中屬性的操作(讀/寫) (getter/setter)
+                2. Vue中的數據方法：
+                    更加方便的操作data中的數據
+                3. 基本原理：
+                    通過Object.defineProperty()方法把data對象中所有屬性添加到vm上
+                    為每一個添加到vm的屬性，都指定一個getter和setter
+                    在getter/setter內部去操作(讀/寫)data中響應的屬性
+        -->
+        <div id="demo">
+            <h2>School Name:{{_data.name}}</h2>
+            <h2>School Address:{{address}}</h2>
+        </div>
+    </body>
+    <script>
+        let obj = {x:100}
+        let obj2 = {y:200}
+
+        Object.defineProperty(obj2, 'x', {
+            get(){
+                return obj.x
+            },
+            set(value){
+                obj.x = value
+            }
+        })
+
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                name:'CUHK',
+                address:'Tai Po'
+            }
+        })
+    </script>
+</html>

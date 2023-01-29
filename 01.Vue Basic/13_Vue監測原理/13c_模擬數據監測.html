@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>13c_模擬數據監測</title>
+    </head>
+    <body>
+        <div id="demo">
+            
+        </div>
+    </body>
+    <script>
+
+        let data = {
+            name:'Donald',
+            address:'HK'
+        }
+
+        // 創建一個監視的實例對象，用於監視data中的屬性變化
+        const obs = new Observer(data)
+
+        // 準備一個vm實例
+        let vm = {}
+        vm._data = data = obs
+
+        function Observer(obj){
+            // 匯總對象中所有的屬性，行程一個數據
+            const keys = Object.keys(obj)
+            // 遍歷
+            keys.forEach((k) => {
+                Object.defineProperty(this, k,{
+                    get(){
+                        return obj[k]
+                    },
+                    set(val){
+                        console.log(`${k} is changed`);
+                        obj[k] = val
+                    }
+                })
+            })
+        }
+
+
+    </script>
+</html>

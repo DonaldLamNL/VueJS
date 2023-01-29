@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>02_模板語法</title>
+        <!-- 引入Vue -->
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <!-- 
+            Vue模塊語法：
+                1. 插值語法
+                    功能：用於解析標籤體的內容
+                    寫法：{{xxx}}, xxx是JS表達式，且可以直接讀取到data中的所有屬性
+                2. 指令語法
+                    功能：用於解析標籤 (包括：標籤屬性、標籤體內容、綁定時間...)
+                    舉例：v-bind:href="xxx" 或 簡寫為 :href="xxx", xxx同為JS表達式，且可以直接讀取到data中的所有屬性
+                    備註：Vue中有很多的指令，且形式都是: v-yyy
+         -->
+        <!-- 準備一個容器 -->
+        <div id="demo">
+            <h1>插值語法</h1>
+            <h3>Hello, {{name}}</h3>
+            <hr>
+            <h1>指令語法</h1>
+            <a v-bind:href="link.url" x="hello">Go To {{link.name}}</a>
+            <a :href="link.url" x="hello">Go To {{link.name}} 2</a>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false;
+
+        // 創建Vue實例
+        new Vue({
+            el:'#demo',
+            data:{
+                name:'Donald',
+                link:{
+                    name:'Google',
+                    url:'http://www.google.com'
+                }
+            }
+        });
+
+    </script>
+</html>

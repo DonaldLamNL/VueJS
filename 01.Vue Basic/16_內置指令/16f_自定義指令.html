@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>16f_自定義指令</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <!-- 
+            自定義指令總結：
+                1. 定義語法：
+                    a. 局部指令：
+                        new Vue({
+                            directives:{指令名:配置對象}
+                        })
+                        new Vue({
+                            directives(){指令名:回調函數}
+                        })
+
+                    b. 全局指令：
+                        Vue.directive('指令名', 配置對象)   或
+                        Vue.directive('指令名', 回調函數)
+
+                2. 配置對象中常用的3個回調：
+                    a. bind：指令與元素成功綁定時
+                    b. inserted：指令所在元素被插入頁面時
+                    c. update：指令所在模板結構被重新解析時
+
+                3. 備註：
+                    a. 指令定義時不加 v-，但使用時要加 v-:
+                    b. 指令名如果是多個單詞，要使用 kebab-case 命名方式，不要用 camelCase 命名方式
+        -->
+        <div id="demo">
+            <h2>{{name}}</h2>
+            <!-- 需求1: 定義一個v-big指令，和v-text功能類似，會把綁定的數值放大10倍 -->
+            <h2>current n value is: <span v-text="n"></span></h2>
+            <h2>10 times n is: <span v-big="n"></span></h2>
+            <button @click="n++">n++</button>
+            <hr>
+            <!-- 需求2: 定義一個v-fbind指令，和v-bind功能類似，但可以讓所綁定的input元素默認獲取焦點 -->
+            <input type="text" v-fbind:value="n">
+            <hr>
+        </div>
+        <!-- DOM操作 -->
+        <div id="demo2">
+            <button id="btn">Click me create an input</button>
+            <input type="text" v-fbind:value="x">
+        </div>
+    </body>
+    <script>
+        var btn = document.getElementById('btn')
+        btn.onclick = function(){
+            const input = document.createElement('input')
+            document.getElementById('demo2').appendChild(input)
+            input.focus()
+        }
+
+        Vue.config.productionTip = false
+
+        // 全局指令定義
+        Vue.directive('fbind', {
+            bind(element, binding){
+                element.value = binding.value * 10
+            },
+            inserted(element, binding){
+                element.focus()
+            },
+            update(element, binding){
+                element.value = binding.value
+            }
+        })
+
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                name:'Donald',
+                n:1
+            },
+            directives:{
+                // big函數調用時機：1. 指令與元素成功綁定時（初次）     2. 指令所在的模板被重新解析時
+                // 'big-number'(element,binding){
+                //     element.innerText = binding.value * 10
+                // },
+                big(element,binding){
+                    // console.log('big', this)   // 此處的this 是 Window
+                    element.innerText = binding.value * 10
+                },
+                
+                // fbind(element, binding){
+                    //     element.value = binding.value
+                    //     element.focus()
+                // },
+                // fbind:{
+                //     // 指令與元素成功綁定時（初次）
+                //     bind(element, binding){
+                //         element.value = binding.value
+                //     },
+                //     // 指令所在元素在插入頁面時
+                //     inserted(element, binding){
+                //         element.focus()
+                //     },
+                //     // 指令所在的模板被重新解析時
+                //     update(element, binding){
+                //         element.value = binding.value
+                //     }
+                // }
+            }
+        })
+    
+        new Vue({
+            el:'#demo2',
+            data:{
+                x:20
+            }
+        })
+    </script>
+</html>

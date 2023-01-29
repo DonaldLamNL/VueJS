@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>16a_v-text</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <!-- 
+            學過的指令：
+                1. v-bind
+                2. v-model
+                3. v-for
+                4. v-if, v-else, v-if-else
+                5. v-show
+            
+            v-text指令：
+                - 作用：向其所在的節點中渲染文本內容
+                - 與插值語法的區別：v-text會替換掉節點中的內容，插值語法則不會 
+        -->
+        <div id="demo">
+            <div>Hello, {{name}}</div>
+            <div v-text="'Hello, ' + name"></div>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                name:'Donald'
+            },
+            methods:{
+                
+            }
+        })
+    </script>
+</html>

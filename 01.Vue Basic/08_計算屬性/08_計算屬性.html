@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        <script src="../vue_basic/vue.js"></script>
+        <style>
+            #demo1{
+                background-color: #bfa;
+                margin-bottom: 10px;
+            }
+            #demo2{
+                background-color: cyan;
+                margin-bottom: 10px;
+            }
+            #demo3{
+                background-color: skyblue;
+                margin-bottom: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 
+            計算屬性：
+                1. 定義：要用的屬性不存在，要通過「已有的屬性 (並非已有的隨便一個變量)」計算得來
+                2. 原理：底層借助了Object.defineProperty方法提供的getter和setter
+                3. get函數的執行時間：
+                    a. 初次讀取時會執行一次
+                    b. 當依賴的數據發生改變時會被再次調用
+                4. 優勢：與methods實現相比，內部有緩存機制(複用)，效率更高，調試方便
+                5. 備註：
+                    a. 計算屬性最終會出現在vm上，可直接讀取使用
+                    b. 如果計算屬性要被修改，那必須寫set函數去響應修改，且set中要引起計算時依賴的數據發生
+                    c. 如果只考慮讀取、不考慮改寫，可以使用簡寫方法，但因為是計算屬性不是method，因此不要加()
+        -->
+        <!-- 插值語法實現 -->
+        <div id="demo1"> 
+            <h2>插值語法實現</h2>
+            First Name: <input type="text" v-model="firstName"><br>
+            Last Name: <input type="text" v-model="lastName"><br>
+            Full Name: <span>{{firstName.slice(0,8)}}-{{lastName}}</span>
+        </div>
+        <!-- methods實現 -->
+        <div id="demo2">
+            <h2>methods實現</h2>
+            First Name: <input type="text" v-model="firstName"><br>
+            Last Name: <input type="text" v-model="lastName"><br>
+            Full Name: <span>{{fullName()}}</span>
+            Full Name: <span>{{fullName()}}</span>
+            Full Name: <span>{{fullName()}}</span>
+        </div>
+        <!-- 計算屬性實現 -->
+        <div id="demo3"> 
+            <h2>計算屬性實現</h2>
+            First Name: <input type="text" v-model="firstName"><br>
+            Last Name: <input type="text" v-model="lastName"><br>
+            Test: <input type="text" v-model="x"><br>
+            Full Name: <span>{{fullName}}</span><br>
+            Full Name: <span>{{fullName}}</span><br>
+            Full Name: <span>{{fullName}}</span><br>
+            Full Name: <span>{{fullName}}</span>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        // 插值語法實現
+        new Vue({
+            el:'#demo1',
+            data:{
+                firstName:'Donald',
+                lastName:'LAM'
+            }
+        })
+
+        // methods實現
+        new Vue({
+            el:'#demo2',
+            data:{
+                firstName:'Donald',
+                lastName:'LAM'
+            },
+            methods:{
+                fullName(){
+                    console.log('@---fullName');
+                    return this.firstName + '-' + this.lastName
+                }
+            }
+        })
+
+        // 計算屬性實現
+        const vm = new Vue({
+            el:'#demo3',
+            data:{
+                firstName:'Donald',
+                lastName:'LAM',
+                x:'Hello'
+            },
+            computed:{
+                // 完整寫法：
+                // fullName:{
+                //     // get的作用：當有人讀取fullName的時候，get就會被調用，且返回值作為fullName的值
+                //     // get被調的時機：1. 初次讀取fullName時     2. 所依賴的數據發生變化時
+                //     get(){
+                //         console.log('get被調用')
+                //         // console.log(this)   // 此處的this是vm
+                //         return this.firstName + '-' + this.lastName     // 被調用的屬性即是依賴的屬性
+                //     },
+                //     // set被調的時機：當fullName被修改是
+                //     set(value){
+                //         console.log('set', value)
+                //         const arr = value.split('-');
+                //         this.firstName = arr[0];
+                //         this.lastName = arr[1];
+                //     }                    
+                // }
+
+                // 簡寫
+                // fullName: function(){
+                //     console.log('get被調用')
+                //     return this.firstName + '-' + this.lastName
+                // }
+                fullName(){
+                    console.log('get被調用')
+                    return this.firstName + '-' + this.lastName
+                }
+            }
+        })
+    </script>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <div id="demo">
+            <h2>Today's weather is {{info}}</h2>
+            <button @click="changeWeather">Switch</button>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                isHot:true,
+            },
+            computed:{
+                info(){
+                    return this.isHot ? 'HOT' : 'COLD'
+                }
+            },
+            methods:{
+                changeWeather(){
+                    this.isHot = !this.isHot
+                }
+            },
+            watch:{
+                // 完整/正常寫法
+                isHot:{
+                    // immediate:true,
+                    // deep:true,
+                    handler(newValue, oldValue){
+                        console.log('isHot被修改了', newValue, oldValue);
+                    }
+                },
+
+                // 簡寫
+                // isHot(newValue, oldValue){
+                //     console.log('isHot被修改了', newValue, oldValue);
+                // }
+            }
+        })
+
+        // 完整寫法
+        // vm.$watch('isHot', {
+        //     immediate:true,
+        //     deep:true,
+        //     handler(newValue, oldValue){
+        //         console.log('isHot被修改了', newValue, oldValue);
+        //     }
+        // })
+
+        // 簡寫
+        // vm.$watch('isHot', function(newValue, oldValue){
+        //     console.log('isHot被修改了', newValue, oldValue);
+        // })
+    </script>
+</html>

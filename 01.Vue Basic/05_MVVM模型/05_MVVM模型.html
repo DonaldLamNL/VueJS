@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>05_MVVM模型</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <!-- 
+            MVVM模型
+                1. M：模型(Model)：對應data中的數據
+                2. V：視圖(View)：模板
+                3. VM：視圖模型(ViewModel)：Vue實例對象
+                    而在文檔中經常會使用 vm(ViewModel) 這個變量名來表示Vue實例
+            觀察發現：
+                1. data中所有的屬性，最後都出現在vm身上
+                2. vm身上的所有屬性 及 Vue原型上的所有屬性，在Vue模板中都可以直接使用
+
+
+        -->
+        <!-- View -->
+        <div id="demo">
+            <h1>School Name:{{name}}</h1>
+            <h1>School Address:{{address}}</h1>
+            <!-- <h1>Test1:{{1+1}}</h1>
+            <h1>Test2:{{$options}}</h1>
+            <h1>Test3:{{$emit}}</h1>
+            <h1>Test4:{{_c}}</h1> -->
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                // Model
+                name:'CUHK',
+                address:'Tai Po',
+                a:1
+            }
+        })
+
+        console.log(vm);
+      </script>
+</html>

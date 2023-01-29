@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>16d_v-once</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <!-- 
+            v-once指令：
+                - v-once 所在節點在初次動態渲染後，就視為靜態內容了
+                - 以後數據的改變不會引起v-once所在結構的更新，可以用於優化性能
+        -->
+        <div id="demo">
+            <h2 v-once>initialized value of n = {{n}}</h2>
+            <h2>current value of n = {{n}}</h2>
+            <button @click="n++">n++</button>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                n:1
+            },
+            methods:{
+                
+            }
+        })
+    </script>
+</html>

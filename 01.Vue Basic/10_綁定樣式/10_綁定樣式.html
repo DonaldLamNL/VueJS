@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        <script src="../vue_basic/vue.js"></script>
+        <style>
+            .basic{
+                height: 100px;
+                width: 400px;
+                border: 1px solid black;
+            }
+
+            .happy{
+                background-image: linear-gradient(yellow, red);
+            }
+            .sad{
+                background-color: blue;
+            }
+            .normal{
+                background-color: rgb(219, 219, 219);
+            }
+
+            .a1{
+                background-color: orange;
+            }
+            .a2{
+                border-radius: 100px;
+            }
+            .a3{
+                border: 5px solid red;
+            }
+
+        </style>
+    </head>
+    <body>
+        <!-- 
+            綁定樣式：  
+                1. class樣式
+                    寫法：class="xxx" xxx可以是字符串、對象、數組
+                        字符串寫法適用於：類名不確定，要動態獲取
+                        對象寫法適用於：要綁定多個樣式，個數不確定、名字也不確定
+                        數組寫法適用於：要綁定多個樣式，個數確定，名字也確定
+                2. style樣式
+                    :style="{fontSize: xxx}" 其中xxx是動態值
+                    :style="[a,b]" 其中a,b是樣式對象
+        -->
+        <div id="root">
+            <!-- 綁定class樣式 -- 字符串寫法，適用於：樣式的類名不確定，需要動態決定 -->
+            <div id="demo" class="basic" :class="mood" @click="changeMood">{{name}}</div><br>
+
+            <!-- 綁定class樣式 -- 數組寫法，適用於：要綁定的樣式個數不確定、名字也不確定 -->
+            <div class="basic" :class="classArr">{{name}}</div><br>
+
+            <!-- 綁定class樣式 -- 對象寫法，適用於：要昂丁的樣式個數確定、名字也確定，但要動態決定用不用 -->
+            <div class="basic" :class="classObj">{{name}}</div><br>
+
+            <!-- 綁定style樣式 -- 對象寫法 -->
+            <div class="basic" :style="styleObj">{{name}}</div><br>
+            
+            <!-- 綁定style樣式 -- 數組寫法，不常用 -->
+            <div class="basic" :style="styleArr">{{name}}</div><br>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el:'#root',
+            data:{
+                name:'Donald',
+                mood:'normal',
+                classArr:['a1', 'a2', 'a3'],
+                classObj:{
+                    a1:false,
+                    a2:false,
+                    a3:true,
+                },
+                styleObj:{
+                    fontSize: '40px',
+                    color: 'red',
+                    backgroundColor: 'orange',
+                },
+                styleArr:[
+                    {
+                    fontSize: '40px',
+                    color: 'red',
+                    },
+                    {
+                    backgroundColor: 'orange',
+                    },
+                ],
+            },
+            methods:{
+                changeMood(){
+                    // 不要動用DOM
+                    // document.getElementById('demo').className = 'basic happy'
+                    const arr = ['happy', 'sad', 'normal']
+                    this.mood = arr[Math.floor(Math.random()*3)]
+                }
+            }
+        })
+    </script>
+</html>

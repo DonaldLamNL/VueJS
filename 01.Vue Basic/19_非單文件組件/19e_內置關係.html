@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>02e_內置關係</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <!-- 
+            內置關係：
+                1. 一個重要的內置關係：VueComponent.prototype.__proto__ === Vue.prototype
+                2. 原因：讓組件實例對象(vc)，也能訪問到Vue原型上的屬性和方法
+        -->
+        <div id="root">
+            <school></school>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        Vue.prototype.x = 99
+
+        const school = Vue.extend({
+            name:'school',
+            template:`
+                <div>
+                    <h2>School Name: {{schoolName}}</h2>
+                    <h2>School Address: {{address}}</h2>
+                    <button @click="showX">Show x</button>
+                </div>
+            `,
+            data(){
+                return{
+                    schoolName:'The Chinese University of Hong Kong',
+                    address:'Hong Kong'
+                }
+            },
+            methods:{
+                showX(){
+                    console.log(this.x)
+                }
+            }
+        })
+
+        const vm = new Vue({
+            el:'#root',
+            data:{
+                msg:'Hello'
+            },
+            components:{
+                school   
+            }
+        })
+
+        console.log(school.prototype.__proto__ === Vue.prototype)
+
+
+
+
+
+
+
+
+
+
+        // JS原型
+        // console.log('------------ JS prototype ------------')
+        // 定義一個構造函數
+        // function Demo(){
+        //     this.a = 1
+        //     this.b = 2
+        // }
+
+        // // 創建一個Demo的實例對象
+        // const d = new Demo()
+
+        // console.log(Demo.prototype) // 顯示原型屬性
+        // console.log(d.__proto__) // 隱式原型屬性
+
+        // // 程序員用過顯示原型屬性操作原型屬性對象，追加一個x屬性，值為99
+        // Demo.prototype.x = 99
+
+        // console.log(d)
+
+        // console.log(Demo.prototype === d.__proto__)
+        
+    </script>
+</html>

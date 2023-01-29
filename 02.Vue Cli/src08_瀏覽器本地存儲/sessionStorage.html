@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>sessionStorage</title>
+</head>
+<body>
+
+    <h2>Session Storage</h2>
+    <button onclick="savaData()">Save Data</button>
+    <button onclick="readData()">Read Data</button>
+    <button onclick="removeData()">Remove Data</button>
+    <button onclick="removeAllData()">Remove All Data</button>
+
+    <script>
+        let p = {name:'Donald', age:19}
+
+        function savaData(){
+            console.log('saved')
+            sessionStorage.setItem('msg', 'hello!!!')
+            sessionStorage.setItem('msg2', 666)
+            sessionStorage.setItem('person', JSON.stringify(p))
+        }
+
+        function readData(){
+            console.log(sessionStorage.getItem('msg'))
+            console.log(sessionStorage.getItem('msg2'))
+            console.log(JSON.parse(sessionStorage.getItem('person')))
+        }
+
+        function removeData(){
+            sessionStorage.removeItem('msg')
+        }
+
+        function removeAllData(){
+            sessionStorage.clear()
+        }
+
+
+    </script>
+    
+</body>
+</html>

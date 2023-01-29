@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>13a_更新時的問題</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <div id="demo">
+            <!-- 遍歷數組 -->
+            <h2>Name List</h2>
+            <button @click="updateFirst">Update Info</button>
+            <ul>
+                <li v-for="(p,index) in persons" :key="p.id">
+                    {{p.name}}-{{p.age}}
+                </li>
+            </ul>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        // 用computed實現
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                persons:[
+                    {id:'001', name:'chou sing chi', age:20},
+                    {id:'002', name:'lau tak wah', age:30},
+                    {id:'003', name:'fung tak lun', age:25},
+                    {id:'004', name:'chou kit lun', age:40},
+                ],
+            },
+            methods:{
+                updateFirst(){
+                    // this.persons[0].name = 'stephen chow'    // It works
+                    // this.persons[0].age = 50     // It works
+                    // this.persons[0] = {id:'001', name:'stephen chow', age:50}   // unwork
+                    this.persons.splice(0, 1, {id:'001', name:'stephen chow', age:50})
+                }
+            }
+        })
+    </script>
+</html>

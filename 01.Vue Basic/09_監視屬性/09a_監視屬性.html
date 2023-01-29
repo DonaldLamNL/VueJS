@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <!-- 
+            監視屬性：
+                1. 當被監視的屬性變化時，回調函數自動調用，進行相關操作
+                2. 監視的屬性必須存在，才能進行監視！！！
+                3. 監視的兩種寫法：
+                    1. new Vue 時傳入watch配置
+                    2. 通過 vm.$watch 監視
+        -->
+        <div id="demo">
+            <h2>Today's weather is {{info}}</h2>
+            <!-- <h2>Today's weather is Good</h2> -->
+            <button @click="changeWeather">Switch</button>
+            <!-- 綁定事件的時候：@xxx="yyy" yyy可以寫一些簡單的語句 -->
+            <!-- <button @click="isHot = !isHot">Switch</button> -->
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                isHot:true
+            },
+            computed:{
+                info(){
+                    return this.isHot ? 'HOT' : 'COLD'
+                }
+            },
+            methods:{
+                changeWeather(){
+                    this.isHot = !this.isHot
+                }
+            },
+            // watch:{
+            //     isHot:{
+            //         immediate:true,    // 初始化是讓handler調用一下
+            //         // handler調用時機：當isHot發生改變時
+            //         handler(newValue, oldValue){
+            //             console.log('isHot被修改了', newValue, oldValue);
+            //         }
+            //     }
+            // }
+        })
+
+        vm.$watch('isHot', {
+            immediate:true,
+            handler(newValue, oldValue){
+                console.log('isHot被修改了', newValue, oldValue);
+            }
+        })
+    </script>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>16e_v-pre</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <!-- 
+            v-pre指令：
+                - 跳過其所在節點的編譯過程
+                - 可以利用它跳過：沒有使用指令語法、沒有使用插值語法的節點，會加快編譯
+        -->
+        <div id="demo">
+            <h2 v-pre>Vue</h2>
+            <h2 v-pre>current value of n = {{n}}</h2>
+            <button v-pre @click="n++">n++</button>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                n:1
+            },
+            methods:{
+                
+            }
+        })
+    </script>
+</html>

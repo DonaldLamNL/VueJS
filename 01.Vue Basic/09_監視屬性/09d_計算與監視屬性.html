@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <!-- 
+            computed 和 watch 之間的區別：
+                1. computed 能完成的功能，watch 也可以完成，只是比較繁瑣
+                2. watch 能完成的功能，computed 不一定能完成，例如：watch可以進行異步操作
+            兩個重要的原則：
+                1. 所被Vue管理的函數，最好寫成普通函數
+                    這樣this的指向才是 vm 或 組件實例對象
+                2. 所有不被Vue所管理的函數(定時器的回調函數、ajax的回調函數、Promise的回調函數等)，最好寫成箭頭函數
+                    這樣this的指向才是 vm 或 組件實例對象
+        -->
+        <div id="demo"> 
+            <h2>watch實現</h2>
+            First Name: <input type="text" v-model="firstName"><br>
+            Last Name: <input type="text" v-model="lastName"><br>
+            Full Name: <span>{{fullName}}</span>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                firstName:'Donald',
+                lastName:'LAM',
+                fullName:'Donald-LAM'
+            },
+            computed:{
+                // fullName(){
+                    // setInterval(function(){
+                    //     console.log(this)    // this === Window
+                    // }, 1000);
+
+                    // setInterval(() => {
+                    //     console.log(this)    // this === Vue
+                    //     // return this.firstName + '-' + this.lastName
+                    // }, 1000);
+                // }
+            },
+            watch:{
+                firstName(newValue, oldValue){
+                    // setInterval(() => {
+                    // }, 1000);
+                    this.fullName = newValue + '-' + this.lastName
+                },
+                lastName(newValue, oldValue){
+                    this.fullName = this.firstName + '-' + newValue;
+                }
+            }
+        })
+    </script>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <!-- 
+            面試題：vue中使用的key有什麼作用？（key的內部原理）
+                
+                1. 虛擬DOM中key的作用：
+                    - key是虛擬DOM對象的標識，當狀態中的數據發生變化時，Vue會根據「新數據」生成「新的虛擬DOM」
+                    - 隨後Vue進行「新虛擬DOM」與「舊虛擬DOM」的差異比較(diff Algorithm)
+                
+                2. diff Algorithm 對比規則：
+                    - 舊虛擬DOM中找到了與新虛擬DOM相同的 *key*
+                        a. 若虛擬DOM中內容 *沒變*，直接使用之前的真實DOM
+                        b. 若虛擬DOM中內容 *有邊*，則聲稱新的真實DOM，隨後替換掉頁面中之前的真實DOM
+                    
+                    - 舊虛擬DOM中找不到與新虛擬DOM相同的 *key*
+                        創建新的真實DOM，隨後渲染到頁面
+
+                3. 用 index 作為 key 可能引發的問題：
+                    a. 若對數據進行：逆序添加、逆序刪除等破壞順序的操作：
+                        會產生沒有必要的真實DOM更新 => 界面效果沒問題，但效率低
+                    b. 如果結構中還包括輸入累的DOM：
+                        會產生錯誤DOM更新 => 介面有問題
+
+                4. 開發中如何選擇 key：
+                    a. 最好使用每條數據的唯一標識作為key，比如id、手機號碼、身分證號碼、學生證號碼等唯一值
+                    b. 如果不存在對數據的逆序添加、逆序刪除等破壞順序的操作，僅用於渲染列表用於展示
+                        使用index作為key是沒有問題的
+        -->
+        <div id="demo">
+            <!-- 遍歷數組 -->
+            <h2>Name List</h2>
+            <button @click.once="add">Add Person</button>
+            <ul>
+                <li v-for="(p,index) in persons" :key="p.id">
+                    {{p.name}}-{{p.age}} -- {{index}}
+                    <input type="text" name="" id="">
+                </li>
+            </ul>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                persons:[
+                    {id:'001', name:'Donald', age:19},
+                    {id:'002', name:'John', age:20},
+                    {id:'003', name:'Jack', age:21},
+                ],
+            },
+            methods: {
+                add(){
+                    const p = {id:'004', name:'May', age:40}
+                    this.persons.unshift(p)
+                    // this.persons.push(p)
+                }
+            },
+        })
+    </script>
+</html>

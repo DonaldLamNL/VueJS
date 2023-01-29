@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <!-- 
+            條件渲染：
+                1. v-if
+                    寫法：
+                        a. v-if="表達式"
+                        b. v-else-if="表達式"
+                        c. v-else
+                    適用於：切換頻率比較低的場景
+                    特點：不展示的DOM元素會被直接移除
+                    注意：v-if 可以和 v-else-if, v-else 一起使用，但要求結構不能被「打斷」
+                
+                2. v-show
+                    寫法：v-show="表達式"
+                    適用於：切換頻率較高的場景
+                    特點：不展示的DOM元素不會被移除，僅僅是使用樣式隱藏
+
+                3. 備註：使用 v-if 時，元素可能無法獲取到，而使用 v-show 一定可以獲取到
+        -->
+        <div id="demo">
+            <h2>current n value = {{n}}</h2>
+            <button @click="n++">n++</button>
+            <!-- 使用 v-show 做條件渲染 -->
+            <!-- <h2 v-show="false">Welcome To {{name}}</h2> -->
+            <!-- <h2 v-show="1 === 1">Welcome To {{name}}</h2> -->
+            
+            <!-- 使用 v-if 做條件渲染 -->
+            <!-- <h2 v-if="false">Welcome To {{name}}</h2> -->
+            <!-- <h2 v-if="1 === 1">Welcome To {{name}}</h2> -->
+
+            <!-- v-else 和 v-else-if -->
+            <!-- <div v-if="n === 1">Angular</div>
+            <div v-else-if="n === 1">React</div>
+            <div v-else-if="n === 3">Vue</div>
+            <div v-else>haha</div> -->
+            
+            <!-- 破壞了結構 -->
+            <div v-if="n === 1">
+                <div>Donald</div>
+                <div>John</div>
+                <div>Jack</div>
+            </div>
+            <!-- template的使用，不可配合v-show使用 -->
+            <template v-if="n === 1">
+                <div>Donald</div>
+                <div>John</div>
+                <div>Jack</div>
+            </template>
+
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                name:'Donald',
+                n:0,
+            },
+            methods:{
+                
+            }
+        })
+    </script>
+</html>

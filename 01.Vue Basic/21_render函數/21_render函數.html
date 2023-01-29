@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        <script src="../vue_basic/vue.runtime.js"></script>
+    </head>
+    <body>
+        <div id="root">
+            
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el:'#root',
+            // template:`<h1>Hello</h1>`
+            render(h){
+                return h('h1', 'Hello')
+            }
+        })
+    </script>
+</html>

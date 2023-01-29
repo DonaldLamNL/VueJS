@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>17b_分析生命週期.html</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <!-- 
+            vm的生命週期：
+                1. 初始化：生命週期、事件
+
+                    -> beforeCreate()
+                        無法通過vm訪問 data中的數據 和 methods中的方法
+
+                2. 初始化：數據監聽、數據代理
+
+                    -> created()
+                        可以通過vm訪問 data中的數據 和 methods中的方法
+
+                3. 解析模板，生成虛擬DOM，此時頁面還不能顯示解析好的內容
+
+                    -> beforeMount()
+                        - 頁面呈現的是未經Vue編譯的DOM結構
+                        - 所有對DOM的操作，「最終」都沒有效果
+
+                4. 將內存中的 虛擬DOM 轉為 真實DOM 插入頁面
+
+                    -> mounted()
+                        - 頁面呈現的是經過Vue編譯的DOM結構
+                        - 一般在此進行：開始定時器、發送網絡請求、綁定自定義事件等 初始化操作
+
+                    -> beforeUpdate()
+                        - 此時數據是新的，但是頁面是舊的 **數據和頁面尚未保持同步
+
+                5. 根據新數據生成新的虛擬DOM，隨後與舊的虛擬DOM進行diff算法比較，最終更新頁面
+
+                    -> updated()
+                        - 此時數據和頁面都是新的 **數據和頁面同步
+
+                    -> beforeDestroyed()
+                        - 此時vm中的所有data、methods都是可用的，但不會進行頁面的更新
+                        - 一般在此進行：關閉定時器等 收尾操作
+
+                6. 刪除所有內置的數據監聽和數據代理
+
+                    -> destroyed()
+        -->
+        <div id="demo">
+            <h2>current value of n = {{n}}</h2>
+            <button @click="add">n++</button>
+            <button @click="destoryVm">Click Me destory vm</button>
+        </div>
+        <!-- <div id="demo">
+
+        </div> -->
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el:'#demo',
+            // template:`
+            //     <div id="demo">
+            //         <h2>current value of n = {{n}}</h2>
+            //         <button @click="add">n++</button>
+            //     </div>
+            // `,
+            data:{
+                n:1
+            },
+            methods:{
+                add(){
+                    console.log('add')
+                    this.n++
+                },
+                destoryVm(){
+                    console.log('bye')
+                    this.$destroy();
+                }
+            },
+            watch:{
+                n(){
+                    console.log('n changed')
+                }
+            },
+            beforeCreate(){
+                console.log('before create')
+            },
+            created(){
+                console.log('created')
+            },
+            beforeMount(){
+                console.log('before mount')
+                // document.querySelector('h2').innerText = 'Hello'
+                // debugger
+            },
+            mounted(){
+                console.log('mounted', this.$el)
+            },
+            beforeUpdate() {
+                console.log('before update')
+            },
+            updated(){
+                console.log('updated')
+            },
+            beforeDestroy(){
+                console.log('before destory')
+                this.add()
+            },
+            destroyed(){
+                console.log('destroyed')
+            },
+        })
+    </script>
+</html>

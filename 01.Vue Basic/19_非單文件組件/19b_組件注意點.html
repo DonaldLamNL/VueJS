@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>02b_組件注意點</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <!-- 
+            注意事項：
+                1. 組件命名方式
+                    a. 一個單詞組成：
+                        第一種寫法：首字母大寫 School
+                        第二種寫法：首字母小寫 school
+                    b. 多個單詞組成：
+                        第一種寫法：kebab-case命名 my-school
+                        第二種寫法：CamelCase命名 MySchool （需要Vue腳手架支持）
+                    備註：
+                        1. 組件名儘可能迴避HTML中已有的元素名稱，例如h2、H2
+                        2. 可以使用name配置項指定組件在開發者工具中呈現的名字
+                
+                2. 組件標籤寫法：
+                    a. <school></school>
+                    b. <school/>    (不使用腳手架時，<school/>標籤會導致後續組件不能渲染)
+
+                3. 簡寫方式：
+                    const school = Vue.extend(options)   可簡寫為：     const school = options
+        -->
+        <div id="demo">
+            <h1>{{msg}}</h1>
+            <school></school>
+            <school></school>
+            <school></school>
+            <hr>
+            <school/>
+            <school/>
+            <school/>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        // 定義組件
+        const s = {
+            name:'Collage',
+            template:`
+                <div>
+                    <h2>School Name: {{schoolName}}</h2>
+                    <h2>School Address: {{address}}</h2>
+                </div>
+            `,
+            data(){
+                return{
+                    schoolName:'CUHK',
+                    address:'Tai Po'
+                }
+            }
+        }
+
+        new Vue({
+            el:'#demo',
+            data:{
+                msg:'Welcome'
+            },
+            components:{
+                school:s
+            }
+        })
+    </script>
+</html>

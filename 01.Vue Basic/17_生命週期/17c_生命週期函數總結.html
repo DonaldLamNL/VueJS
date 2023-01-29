@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>17c_生命週期函數總結</title>
+        <script src="../vue_basic/vue.js"></script>
+    </head>
+    <body>
+        <!-- 
+            生命週期總結：
+                常用的生命週期函數：
+                    1. mounted() 發送ajax請求、啟動定時器、綁定自定義事件、訂閱消息等【初始化操作】
+                    2. beforeDestroy() 清除定時器、解綁自定義事件、取消訂閱信息等【收尾工作】
+                
+                關於銷毀Vue實例：
+                    1. 銷毀後借助Vue的開發者工具看不到任何信息
+                    2. 銷毀後自定義事件會失效，但原生DOM事件依然有效
+                    3. 一般不會在beforeDestroy操作數據，因為即便操作數據，也不會觸發更新流程
+        -->
+        <div id="demo">
+            <h2 :style="{opacity}">Hello World</h2>
+            <button @click="stop">Stop Gradiating</button>
+            <button @click="opacity = 1">Set Opacity to 1</button>
+        </div>
+    </body>
+    <script>
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el:'#demo',
+            data:{
+                opacity:1
+            },
+            methods:{
+                stop(){
+                    this.$destroy();
+                }
+            },
+            mounted(){
+                this.timer = setInterval(() => {
+                    this.opacity = this.opacity < 0 ? 1 : this.opacity
+                    this.opacity -= 0.01
+                }, 16);
+            },
+            beforeDestroy(){
+                clearInterval(this.timer)
+            },
+        })
+    </script>
+</html>
